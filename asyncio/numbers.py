@@ -13,7 +13,7 @@ is idle, so we switch to task2. There we start print numbers from 0 to 9.
 But within the 2 seconds window. Since the second function sleeps for 0.5 seconds,
 there's only time to print 4 numbers. Which is 0 to 3. Then control is given
 back to fetch data. It prints done fetchint and returns a value. Then control is
-returned to main, it prints value then terminate.
+returned to main, it prints value then terminate.  
 """
 
 

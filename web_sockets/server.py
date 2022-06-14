@@ -4,7 +4,6 @@ import threading
 # Port and Ip address we'll run the server on.
 HEADER = 64
 PORT = 5050
-SERVER = "192.168.43.208"
 SERVER = socket.gethostbyname(socket.gethostname()) # Gets my ip address
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
@@ -20,12 +19,15 @@ def handle_client(conn, addr):
 	print(f"[NEW CONNECTION] {addr} connected.")
 	connected = True
 	while connected:
-		msg_length = int(conn.recv(HEADER).decode(FORMAT)) # Blocking line of code
-		msg = conn.recv(msg_length).decode(FORMAT)
-		if msg == DISCONNECT_MESSAGE:
-			connected = False
+		msg_length = conn.recv(HEADER).decode(FORMAT) # Blocking line of code
+		if msg_length:
+			msg_length = int(msg_length)
+			msg = conn.recv(msg_length).decode(FORMAT)
+			if msg == DISCONNECT_MESSAGE:
+				connected = False
 
-		print(f"[{addr}] {msg}")
+			print(f"[{addr}] {msg}")
+			conn.send("Message received".encode(FORMAT))
 
 	conn.close()
 
